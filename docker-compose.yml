@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  smallworld:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - LOG_LEVEL=info
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  # Development service with hot reload
+  smallworld-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./smallworld:/app/smallworld:ro
+    command: ["uvicorn", "smallworld.api.app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    profiles:
+      - dev

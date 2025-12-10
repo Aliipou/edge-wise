@@ -1,0 +1,86 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "smallworld-services"
+version = "0.1.0"
+description = "Microservice dependency graph analyzer using Small-World Network theory for topology optimization"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+authors = [
+    { name = "Small-World Services Team" }
+]
+keywords = [
+    "microservices",
+    "graph-analysis",
+    "network-topology",
+    "small-world",
+    "optimization",
+    "service-mesh"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Distributed Computing",
+    "Topic :: System :: Networking",
+]
+
+dependencies = [
+    "networkx>=3.0",
+    "numpy>=1.24",
+    "pydantic>=2.0",
+    "fastapi>=0.100",
+    "uvicorn[standard]>=0.23",
+    "typer>=0.9",
+    "rich>=13.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pytest-asyncio>=0.21",
+    "httpx>=0.24",
+    "mypy>=1.5",
+    "ruff>=0.1",
+    "hypothesis>=6.0",
+]
+
+[project.scripts]
+smallworld = "smallworld.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/smallworld-services/smallworld"
+Documentation = "https://github.com/smallworld-services/smallworld#readme"
+Repository = "https://github.com/smallworld-services/smallworld"
+
+[tool.hatch.build.targets.wheel]
+packages = ["smallworld"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-v --cov=smallworld --cov-report=term-missing"

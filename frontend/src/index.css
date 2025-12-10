@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-100;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-700 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-600;
+  }
+}
+
+@layer components {
+  /* Glass morphism card */
+  .glass-card {
+    @apply bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-edge-400 via-neural-400 to-edge-400 bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: gradient 3s linear infinite;
+  }
+
+  /* Glow button */
+  .btn-glow {
+    @apply relative px-6 py-3 font-semibold text-white rounded-xl overflow-hidden;
+    @apply bg-gradient-to-r from-edge-500 to-neural-500;
+    @apply hover:from-edge-400 hover:to-neural-400;
+    @apply transition-all duration-300;
+    @apply shadow-lg shadow-edge-500/25 hover:shadow-edge-500/50;
+  }
+
+  .btn-glow::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-edge-400 to-neural-400 opacity-0;
+    @apply transition-opacity duration-300;
+  }
+
+  .btn-glow:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Metric card */
+  .metric-card {
+    @apply glass-card p-6 relative overflow-hidden;
+  }
+
+  .metric-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-edge-500 to-neural-500;
+  }
+
+  /* Node status indicators */
+  .status-healthy {
+    @apply bg-success-500/20 border-success-500/50 text-success-400;
+  }
+
+  .status-warning {
+    @apply bg-warning-500/20 border-warning-500/50 text-warning-400;
+  }
+
+  .status-critical {
+    @apply bg-danger-500/20 border-danger-500/50 text-danger-400;
+  }
+
+  /* Animated grid background */
+  .grid-bg {
+    @apply bg-grid-pattern bg-grid;
+    animation: grid-move 20s linear infinite;
+  }
+
+  /* Pulse ring animation */
+  .pulse-ring {
+    @apply absolute rounded-full border-2 border-edge-400/50;
+    animation: pulse-ring 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  /* Navigation link */
+  .nav-link {
+    @apply relative px-4 py-2 text-slate-400 hover:text-white transition-colors duration-200;
+  }
+
+  .nav-link.active {
+    @apply text-white;
+  }
+
+  .nav-link.active::after {
+    content: '';
+    @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-edge-400 rounded-full;
+  }
+}
+
+@layer utilities {
+  /* Animation delay utilities */
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-700 { animation-delay: 700ms; }
+  .animation-delay-1000 { animation-delay: 1000ms; }
+}
+
+@keyframes grid-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}

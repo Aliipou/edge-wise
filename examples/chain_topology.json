@@ -1,0 +1,17 @@
+{
+  "services": [
+    {"name": "frontend", "replicas": 2, "criticality": "high"},
+    {"name": "api-gateway", "replicas": 3, "criticality": "critical"},
+    {"name": "auth", "replicas": 2, "criticality": "critical"},
+    {"name": "user-manager", "replicas": 2, "criticality": "high"},
+    {"name": "profile-service", "replicas": 1, "criticality": "medium"},
+    {"name": "database-proxy", "replicas": 2, "criticality": "critical"}
+  ],
+  "edges": [
+    {"from": "frontend", "to": "api-gateway", "call_rate": 100, "p50": 5, "p95": 20},
+    {"from": "api-gateway", "to": "auth", "call_rate": 95, "p50": 10, "p95": 40},
+    {"from": "auth", "to": "user-manager", "call_rate": 90, "p50": 15, "p95": 60},
+    {"from": "user-manager", "to": "profile-service", "call_rate": 85, "p50": 20, "p95": 80},
+    {"from": "profile-service", "to": "database-proxy", "call_rate": 80, "p50": 25, "p95": 100}
+  ]
+}

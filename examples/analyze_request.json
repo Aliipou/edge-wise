@@ -1,0 +1,33 @@
+{
+  "services": [
+    {"name": "gateway", "replicas": 3, "tags": ["frontend"], "criticality": "critical"},
+    {"name": "auth", "replicas": 3, "tags": ["security"], "criticality": "critical"},
+    {"name": "users", "replicas": 2, "tags": ["core"], "criticality": "high"},
+    {"name": "orders", "replicas": 2, "tags": ["business"], "criticality": "high"},
+    {"name": "payments", "replicas": 3, "tags": ["business", "pci"], "criticality": "critical"},
+    {"name": "inventory", "replicas": 2, "tags": ["business"], "criticality": "medium"},
+    {"name": "notifications", "replicas": 1, "tags": ["messaging"], "criticality": "low"}
+  ],
+  "edges": [
+    {"from": "gateway", "to": "auth", "call_rate": 500, "p50": 5, "p95": 25, "error_rate": 0.001},
+    {"from": "gateway", "to": "orders", "call_rate": 200, "p50": 15, "p95": 75, "error_rate": 0.003},
+    {"from": "auth", "to": "users", "call_rate": 450, "p50": 8, "p95": 40, "error_rate": 0.001},
+    {"from": "orders", "to": "users", "call_rate": 180, "p50": 12, "p95": 60, "error_rate": 0.002},
+    {"from": "orders", "to": "payments", "call_rate": 150, "p50": 20, "p95": 100, "error_rate": 0.005},
+    {"from": "orders", "to": "inventory", "call_rate": 180, "p50": 25, "p95": 125, "error_rate": 0.003},
+    {"from": "payments", "to": "notifications", "call_rate": 140, "p50": 15, "p95": 75, "error_rate": 0.002},
+    {"from": "inventory", "to": "notifications", "call_rate": 50, "p50": 10, "p95": 50, "error_rate": 0.001}
+  ],
+  "options": {
+    "goal": "latency",
+    "k": 5,
+    "alpha": 1.5,
+    "beta": 1.0,
+    "gamma": 0.1
+  },
+  "policy": {
+    "forbidden_pairs": [["gateway", "notifications"]],
+    "max_new_edges_per_service": 2,
+    "min_path_length_to_shortcut": 2
+  }
+}

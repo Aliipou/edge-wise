@@ -1,0 +1,204 @@
+{
+  "services": [
+    {
+      "name": "api-gateway",
+      "replicas": 3,
+      "tags": ["frontend", "public"],
+      "criticality": "critical",
+      "zone": "us-east-1"
+    },
+    {
+      "name": "auth-service",
+      "replicas": 3,
+      "tags": ["security", "critical"],
+      "criticality": "critical",
+      "zone": "us-east-1"
+    },
+    {
+      "name": "user-service",
+      "replicas": 2,
+      "tags": ["core"],
+      "criticality": "high",
+      "zone": "us-east-1"
+    },
+    {
+      "name": "order-service",
+      "replicas": 2,
+      "tags": ["business"],
+      "criticality": "high",
+      "zone": "us-east-1"
+    },
+    {
+      "name": "payment-service",
+      "replicas": 3,
+      "tags": ["business", "pci"],
+      "criticality": "critical",
+      "zone": "us-east-1"
+    },
+    {
+      "name": "inventory-service",
+      "replicas": 2,
+      "tags": ["business"],
+      "criticality": "medium",
+      "zone": "us-west-2"
+    },
+    {
+      "name": "notification-service",
+      "replicas": 1,
+      "tags": ["messaging"],
+      "criticality": "low",
+      "zone": "us-west-2"
+    },
+    {
+      "name": "analytics-service",
+      "replicas": 1,
+      "tags": ["reporting"],
+      "criticality": "low",
+      "zone": "us-west-2"
+    },
+    {
+      "name": "shipping-service",
+      "replicas": 2,
+      "tags": ["logistics"],
+      "criticality": "medium",
+      "zone": "us-west-2"
+    },
+    {
+      "name": "recommendation-service",
+      "replicas": 2,
+      "tags": ["ml"],
+      "criticality": "low",
+      "zone": "us-west-2"
+    }
+  ],
+  "edges": [
+    {
+      "from": "api-gateway",
+      "to": "auth-service",
+      "call_rate": 500.0,
+      "p50": 5.0,
+      "p95": 25.0,
+      "error_rate": 0.001
+    },
+    {
+      "from": "api-gateway",
+      "to": "user-service",
+      "call_rate": 300.0,
+      "p50": 10.0,
+      "p95": 50.0,
+      "error_rate": 0.002
+    },
+    {
+      "from": "api-gateway",
+      "to": "order-service",
+      "call_rate": 200.0,
+      "p50": 15.0,
+      "p95": 75.0,
+      "error_rate": 0.003
+    },
+    {
+      "from": "auth-service",
+      "to": "user-service",
+      "call_rate": 450.0,
+      "p50": 8.0,
+      "p95": 40.0,
+      "error_rate": 0.001
+    },
+    {
+      "from": "order-service",
+      "to": "user-service",
+      "call_rate": 180.0,
+      "p50": 12.0,
+      "p95": 60.0,
+      "error_rate": 0.002
+    },
+    {
+      "from": "order-service",
+      "to": "payment-service",
+      "call_rate": 150.0,
+      "p50": 20.0,
+      "p95": 100.0,
+      "error_rate": 0.005
+    },
+    {
+      "from": "order-service",
+      "to": "inventory-service",
+      "call_rate": 180.0,
+      "p50": 25.0,
+      "p95": 125.0,
+      "error_rate": 0.003
+    },
+    {
+      "from": "payment-service",
+      "to": "notification-service",
+      "call_rate": 140.0,
+      "p50": 15.0,
+      "p95": 75.0,
+      "error_rate": 0.002
+    },
+    {
+      "from": "inventory-service",
+      "to": "notification-service",
+      "call_rate": 50.0,
+      "p50": 10.0,
+      "p95": 50.0,
+      "error_rate": 0.001
+    },
+    {
+      "from": "order-service",
+      "to": "shipping-service",
+      "call_rate": 100.0,
+      "p50": 30.0,
+      "p95": 150.0,
+      "error_rate": 0.004
+    },
+    {
+      "from": "shipping-service",
+      "to": "notification-service",
+      "call_rate": 90.0,
+      "p50": 12.0,
+      "p95": 60.0,
+      "error_rate": 0.002
+    },
+    {
+      "from": "api-gateway",
+      "to": "recommendation-service",
+      "call_rate": 100.0,
+      "p50": 50.0,
+      "p95": 250.0,
+      "error_rate": 0.01
+    },
+    {
+      "from": "recommendation-service",
+      "to": "user-service",
+      "call_rate": 80.0,
+      "p50": 20.0,
+      "p95": 100.0,
+      "error_rate": 0.005
+    },
+    {
+      "from": "recommendation-service",
+      "to": "order-service",
+      "call_rate": 60.0,
+      "p50": 25.0,
+      "p95": 125.0,
+      "error_rate": 0.008
+    },
+    {
+      "from": "analytics-service",
+      "to": "order-service",
+      "call_rate": 20.0,
+      "p50": 100.0,
+      "p95": 500.0,
+      "error_rate": 0.01
+    },
+    {
+      "from": "analytics-service",
+      "to": "user-service",
+      "call_rate": 15.0,
+      "p50": 80.0,
+      "p95": 400.0,
+      "error_rate": 0.01
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="45" fill="#0c4a6e" opacity="0.3"/>
+
+  <!-- Network nodes -->
+  <g filter="url(#glow)">
+    <!-- Center node -->
+    <circle cx="50" cy="50" r="8" fill="url(#grad1)"/>
+
+    <!-- Outer nodes -->
+    <circle cx="25" cy="30" r="5" fill="#0ea5e9"/>
+    <circle cx="75" cy="30" r="5" fill="#0ea5e9"/>
+    <circle cx="20" cy="60" r="5" fill="#a855f7"/>
+    <circle cx="80" cy="60" r="5" fill="#a855f7"/>
+    <circle cx="35" cy="80" r="5" fill="#0ea5e9"/>
+    <circle cx="65" cy="80" r="5" fill="#0ea5e9"/>
+
+    <!-- Connections -->
+    <line x1="50" y1="50" x2="25" y2="30" stroke="url(#grad1)" stroke-width="2" opacity="0.7"/>
+    <line x1="50" y1="50" x2="75" y2="30" stroke="url(#grad1)" stroke-width="2" opacity="0.7"/>
+    <line x1="50" y1="50" x2="20" y2="60" stroke="url(#grad1)" stroke-width="2" opacity="0.7"/>
+    <line x1="50" y1="50" x2="80" y2="60" stroke="url(#grad1)" stroke-width="2" opacity="0.7"/>
+    <line x1="50" y1="50" x2="35" y2="80" stroke="url(#grad1)" stroke-width="2" opacity="0.7"/>
+    <line x1="50" y1="50" x2="65" y2="80" stroke="url(#grad1)" stroke-width="2" opacity="0.7"/>
+
+    <!-- Shortcut edges (dashed) -->
+    <line x1="25" y1="30" x2="65" y2="80" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.8"/>
+    <line x1="75" y1="30" x2="20" y2="60" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.8"/>
+  </g>
+</svg>
