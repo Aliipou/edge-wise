@@ -198,7 +198,7 @@ frontend/
 ## Dev Setup
 
 ```bash
-git clone <repo>
+git clone https://github.com/Aliipou/edge-wise
 cd small-world
 
 # backend
