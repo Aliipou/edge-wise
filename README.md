@@ -12,8 +12,6 @@ Small-world networks (like your brain's neural network, or social networks) solv
 
 EdgeWise analyzes your topology and tells you exactly which shortcuts to add.
 
-![Graph Explorer](Screenshot_2.jpg)
-
 ## Install
 
 ```bash
