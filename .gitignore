@@ -121,3 +121,7 @@ Thumbs.db
 *.log
 output/
 results/
+
+node_modules/
+CLAUDE.md
+ANTI_GARBAGE_CHECKLIST.md
